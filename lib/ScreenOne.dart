@@ -10,6 +10,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _nameofuser = TextEditingController();
   TextEditingController _passwordofuser = TextEditingController();
+
+  bool isdatamatched = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,15 +52,29 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 20,
             ),
-            Container(
-                alignment: Alignment.bottomRight,
-                // padding: const EdgeInsets.all(0),
-                child: ElevatedButton(
-                  child: const Text('login'),
-                  onPressed: () {
-                    checking(context);
-                  },
-                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Visibility(
+                  visible: !isdatamatched,
+                  child: Container(
+                    child: Text(
+                      'user name and password does not match',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ),
+                Container(
+                    alignment: Alignment.bottomRight,
+                    // padding: const EdgeInsets.all(0),
+                    child: ElevatedButton(
+                      child: const Text('login'),
+                      onPressed: () {
+                        checking(context);
+                      },
+                    )),
+              ],
+            ),
           ]),
         ),
       ),
@@ -70,32 +87,40 @@ class _LoginPageState extends State<LoginPage> {
 
     if (_username == _password) {
       //go to home
+      setState(() {
+        isdatamatched = true;
+      });
     } else {
       final _errormessage = 'username and passsword does not match';
       //snackbar
-      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.red,
-        content: Text(_errormessage),
-      ));
+      // ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+      //   behavior: SnackBarBehavior.floating,
+      //   backgroundColor: Colors.red,
+      //   content: Text(_errormessage),
+      // ));
 
       //alert dialogue
 
-      showDialog(
-          context: ctx,
-          builder: (context1) {
-            return AlertDialog(
-              title: Text('dude ..'),
-              content: Text(_errormessage),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context1).pop();
-                    },
-                    child: Text('Got It'))
-              ],
-            );
-          });
+      // showDialog(
+      //     context: ctx,
+      //     builder: (context1) {
+      //       return AlertDialog(
+      //         title: Text('dude ..'),
+      //         content: Text(_errormessage),
+      //         actions: [
+      //           TextButton(
+      //               onPressed: () {
+      //                 Navigator.of(context1).pop();
+      //               },
+      //               child: Text('Got It'))
+      //         ],
+      //       );
+      //     });
+
+      //showing text
+      setState(() {
+        isdatamatched = false;
+      });
     }
   }
 }
