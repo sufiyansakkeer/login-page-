@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:login_page/main.dart';
 import 'package:login_page/screentwo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,76 +15,106 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _passwordofuser = TextEditingController();
 
   bool isdatamatched = true;
+  final _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: ListView(children: <Widget>[
-            const SizedBox(
-              height: 80,
-            ),
-            Container(
-              alignment: Alignment.center,
-              // padding: const EdgeInsets.all(20),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'User Name',
-                ),
-                controller: _nameofuser,
+        child: Form(
+          key: _formkey,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ListView(children: <Widget>[
+              const SizedBox(
+                height: 80,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              alignment: Alignment.center,
-              // padding: const EdgeInsets.all(20),
-              child: TextFormField(
-                obscureText: true,
-                controller: _passwordofuser,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Password',
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Visibility(
-                  visible: !isdatamatched,
-                  child: Container(
-                    child: Text(
-                      'user name and password does not match',
-                      style: TextStyle(color: Colors.red),
-                    ),
+              Container(
+                alignment: Alignment.center,
+                // padding: const EdgeInsets.all(20),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'User Name',
                   ),
+                  validator: (value) {
+                    // if (isdatamatched) {
+                    //   return null;
+                    // } else {
+                    //   return 'invalid username';
+                    // }
+                    if (value == null || value.isEmpty) {
+                      return 'required';
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: _nameofuser,
                 ),
-                Container(
-                    alignment: Alignment.bottomRight,
-                    // padding: const EdgeInsets.all(0),
-                    child: ElevatedButton(
-                      child: const Text('login'),
-                      onPressed: () {
-                        checking(context);
-                      },
-                    )),
-              ],
-            ),
-          ]),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                alignment: Alignment.center,
+                // padding: const EdgeInsets.all(20),
+                child: TextFormField(
+                  obscureText: true,
+                  controller: _passwordofuser,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Password',
+                  ),
+                  validator: (value) {
+                    // if (isdatamatched) {
+                    //   return null;
+                    // } else {
+                    //   return 'password is incorrect';
+                    // }
+                    if (value == null || value.isEmpty) {
+                      return 'required';
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  // Visibility(
+                  //   visible: !isdatamatched,
+                  //   child: Container(
+                  //     child: Text(
+                  //       'user name and password does not match',
+                  //       style: TextStyle(color: Colors.red),
+                  //     ),
+                  //   ),
+                  // ),
+                  Container(
+                      alignment: Alignment.bottomRight,
+                      // padding: const EdgeInsets.all(0),
+                      child: ElevatedButton(
+                        child: const Text('login'),
+                        onPressed: () {
+                          if (_formkey.currentState!.validate()) {
+                            checking(context);
+                          } else {}
+                        },
+                      )),
+                ],
+              ),
+            ]),
+          ),
         ),
       ),
     );
   }
 
-  void checking(BuildContext ctx) {
+  void checking(BuildContext ctx) async {
     final _username = 'admin';
     // final _username = _nameofuser.text;
     // final _password = _passwordofuser.text;
@@ -90,20 +122,24 @@ class _LoginPageState extends State<LoginPage> {
 
     if (_username == _nameofuser.text && _password == _passwordofuser.text) {
       //go to home
+      final _sharedprefs = await SharedPreferences.getInstance();
+      _sharedprefs.setBool(Shared_Key_value, true);
+
       setState(() {
         isdatamatched = true;
-        Navigator.of(context).push(MaterialPageRoute(builder: ((context) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: ((context) {
           return HomePage();
         })));
       });
     } else {
       final _errormessage = 'username and passsword does not match';
-      //snackbar
-      // ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-      //   behavior: SnackBarBehavior.floating,
-      //   backgroundColor: Colors.red,
-      //   content: Text(_errormessage),
-      // ));
+      // snackbar
+      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.red,
+        content: Text(_errormessage),
+      ));
 
       //alert dialogue
 

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:login_page/ScreenOne.dart';
+import 'package:login_page/main.dart';
+import 'package:login_page/screentwo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,7 +16,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    gotoLogin();
+    UserLogged();
+    // gotoLogin();
 
     super.initState();
   }
@@ -42,8 +46,20 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> gotoLogin() async {
     await Future.delayed(const Duration(seconds: 3));
     // ignore: use_build_context_synchronously
-    Navigator.of(context).push(MaterialPageRoute(builder: ((ctx) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((ctx) {
       return const LoginPage();
     })));
+  }
+
+  Future<void> UserLogged() async {
+    final _sharedprefs = await SharedPreferences.getInstance();
+    final _userloggedin = _sharedprefs.getBool(Shared_Key_value);
+    if (_userloggedin == null || _userloggedin == false) {
+      gotoLogin();
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(builder: ((context) {
+        return HomePage();
+      })));
+    }
   }
 }
