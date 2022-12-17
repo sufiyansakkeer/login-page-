@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_page/screentwo.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -82,13 +83,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void checking(BuildContext ctx) {
-    final _username = _nameofuser.text;
-    final _password = _passwordofuser.text;
+    final _username = 'admin';
+    // final _username = _nameofuser.text;
+    // final _password = _passwordofuser.text;
+    final _password = 'password';
 
-    if (_username == _password) {
+    if (_username == _nameofuser.text && _password == _passwordofuser.text) {
       //go to home
       setState(() {
         isdatamatched = true;
+        Navigator.of(context).push(MaterialPageRoute(builder: ((context) {
+          return HomePage();
+        })));
       });
     } else {
       final _errormessage = 'username and passsword does not match';
