@@ -11,8 +11,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _nameofuser = TextEditingController();
-  TextEditingController _passwordofuser = TextEditingController();
+  final TextEditingController _nameofuser = TextEditingController();
+  final TextEditingController _passwordofuser = TextEditingController();
 
   bool isdatamatched = true;
   final _formkey = GlobalKey<FormState>();
@@ -129,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
         isdatamatched = true;
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: ((context) {
+          // ignore: prefer_const_constructors
           return HomePage();
         })));
       });
