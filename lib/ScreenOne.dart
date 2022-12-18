@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers, prefer_const_constructors, prefer_const_declarations
+
 import 'package:flutter/material.dart';
 import 'package:login_page/main.dart';
 import 'package:login_page/screentwo.dart';
@@ -24,16 +26,20 @@ class _LoginPageState extends State<LoginPage> {
         child: Form(
           key: _formkey,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(40.0),
             child: ListView(children: <Widget>[
               const SizedBox(
-                height: 80,
+                height: 100,
               ),
               Container(
                 alignment: Alignment.center,
                 // padding: const EdgeInsets.all(20),
                 child: TextFormField(
                   decoration: const InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.person_outline,
+                      color: Colors.blueGrey,
+                    ),
                     border: OutlineInputBorder(),
                     hintText: 'User Name',
                   ),
@@ -62,6 +68,10 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                   controller: _passwordofuser,
                   decoration: const InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.lock_outline,
+                      color: Colors.blueGrey,
+                    ),
                     border: OutlineInputBorder(),
                     hintText: 'Password',
                   ),
@@ -129,7 +139,6 @@ class _LoginPageState extends State<LoginPage> {
         isdatamatched = true;
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: ((context) {
-          // ignore: prefer_const_constructors
           return HomePage();
         })));
       });
