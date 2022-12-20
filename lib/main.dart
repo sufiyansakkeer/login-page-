@@ -1,13 +1,8 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:login_page/ScreenOne.dart';
 import 'package:login_page/splash.dart';
 
-const Shared_Key_value = 'UserLoggedIn';
+const sharedKeyValue = 'UserLoggedIn';
 void main(List<String> args) {
   runApp(const MyApp());
 }
@@ -22,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         backgroundColor: Colors.blueGrey,
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

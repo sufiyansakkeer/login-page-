@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:login_page/ScreenOne.dart';
+
+import 'package:login_page/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home '),
+        title: const Text('Home '),
         actions: [
           IconButton(
               onPressed: (() {
@@ -104,11 +103,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   signout(BuildContext ctx) async {
-    final _sharedprefs = await SharedPreferences.getInstance();
-    await _sharedprefs.clear();
+    final sharedprefs = await SharedPreferences.getInstance();
+    await sharedprefs.clear();
     return Navigator.of(ctx).pushAndRemoveUntil(
         MaterialPageRoute(builder: ((context) {
-      return LoginPage();
+      return const LoginPage();
     })), (route) => false);
   }
 }

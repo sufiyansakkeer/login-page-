@@ -1,8 +1,6 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, prefer_const_constructors, prefer_const_declarations
-
 import 'package:flutter/material.dart';
 import 'package:login_page/main.dart';
-import 'package:login_page/screentwo.dart';
+import 'package:login_page/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -125,30 +123,30 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void checking(BuildContext ctx) async {
-    final _username = 'admin';
+    const username = 'admin';
     // final _username = _nameofuser.text;
     // final _password = _passwordofuser.text;
-    final _password = 'password';
+    const password = 'password';
 
-    if (_username == _nameofuser.text && _password == _passwordofuser.text) {
+    if (username == _nameofuser.text && password == _passwordofuser.text) {
       //go to home
-      final _sharedprefs = await SharedPreferences.getInstance();
-      _sharedprefs.setBool(Shared_Key_value, true);
+      final sharedprefs = await SharedPreferences.getInstance();
+      sharedprefs.setBool(sharedKeyValue, true);
 
       setState(() {
         isdatamatched = true;
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: ((context) {
-          return HomePage();
+          return const HomePage();
         })));
       });
     } else {
-      final _errormessage = 'username and passsword does not match';
+      const errormessage = 'username and password does not match';
       // snackbar
-      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
         behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.red,
-        content: Text(_errormessage),
+        content: Text(errormessage),
       ));
 
       //alert dialogue
