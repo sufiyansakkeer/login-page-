@@ -124,8 +124,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void checking(BuildContext ctx) async {
     const username = 'admin';
-    // final _username = _nameofuser.text;
-    // final _password = _passwordofuser.text;
+
     const password = 'password';
 
     if (username == _nameofuser.text && password == _passwordofuser.text) {
@@ -148,24 +147,6 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.red,
         content: Text(errormessage),
       ));
-
-      //alert dialogue
-
-      // showDialog(
-      //     context: ctx,
-      //     builder: (context1) {
-      //       return AlertDialog(
-      //         title: Text('dude ..'),
-      //         content: Text(_errormessage),
-      //         actions: [
-      //           TextButton(
-      //               onPressed: () {
-      //                 Navigator.of(context1).pop();
-      //               },
-      //               child: Text('Got It'))
-      //         ],
-      //       );
-      //     });
 
       //showing text
       setState(() {
